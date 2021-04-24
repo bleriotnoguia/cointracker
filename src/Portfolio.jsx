@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 // import axios from "axios";
-import "./App.css";
 import response from "./data.json";
 
-function App() {
+export default function Portfolio() {
   const [data, setData] = useState(response.data);
   // const [data, setData] = useState([]);
   // var cmc_api_key = "xxxxx-xxxx-xxxxx-xxxxxxxx-xxxxxxx";
@@ -23,7 +22,7 @@ function App() {
   // }, [data]);
   return (
     <div className="p-5">
-        <div className="text-center">
+        <div className="text-left">
           <h1 className="font-bold text-4xl uppercase">Portfolio</h1>
           <p className="text-xl">Track your crypto portfolio</p>
         </div>
@@ -64,5 +63,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
