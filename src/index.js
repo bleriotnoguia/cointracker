@@ -6,6 +6,7 @@ import Portfolio from './Portfolio.jsx'
 import Navbar from './Navbar.jsx'
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
 import reportWebVitals from './reportWebVitals';
+import Footer from './Footer.jsx'
 
 ReactDOM.render(
   <React.StrictMode>
@@ -19,6 +20,7 @@ ReactDOM.render(
           <Portfolio />
         </Route>
       </Switch>
+      <Footer />
     </Router>
   </React.StrictMode>,
   document.getElementById('root')
