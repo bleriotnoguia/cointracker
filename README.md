@@ -2,7 +2,7 @@
 
 > Coinmarketcap portfolio clone. Built with React & Tailwindccs for learning purpose
 
-![screenshot](https://github.com/bleriotnoguia/cointracker/blob/screenshot.png)
+![screenshot](https://github.com/bleriotnoguia/cointracker/blob/main/screenshot.png)
 
 # Getting Started with Create React App
 
