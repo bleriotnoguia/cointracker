@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Footer() {
     return (
-        <div className="px-4 py-8 md:px-8 md:py-8 lg:px-16 lg:py-8 xl:px-52">
+        <div className="container px-4 mx-auto py-8">
             <div className="flex flex-col lg:flex-row lg:justify-between">
                 <div className="lg:w-1/3 py-3">
                     <img className="h-7" src="https://s2.coinmarketcap.com/static/cloud/img/coinmarketcap_1.svg" alt=""/>
