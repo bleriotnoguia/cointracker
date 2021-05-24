@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from "react-router-dom"
-import { FaChartPie, FaCaretDown, FaMoon } from "react-icons/fa"
+import { FaChartPie, FaMoon } from "react-icons/fa"
+import MyListBox from "./components/MyListBox.jsx"
 
 export default function Navbar() {
     return (
@@ -13,8 +14,8 @@ export default function Navbar() {
                 <li className="p-2">
                     <Link to="/portfolio"><FaChartPie /></Link>
                 </li>
-                <li className="p-2 flex items-center">
-                    <span className="mr-1">USD</span><FaCaretDown />
+                <li>
+                    <MyListBox />
                 </li>
                 <li className="p-2">
                     <FaMoon />

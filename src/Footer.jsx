@@ -10,35 +10,35 @@ export default function Footer() {
                 </div>
                 <div className="lg:w-1/2 grid grid-cols-2 lg:grid-cols-4 py-3">
                     <div className="py-3">
-                        <h1 className="font-bold">title1</h1>
+                        <h1 className="font-bold">Title 1</h1>
                         <ul className="mt-2">
                             <li>text 1</li>
                             <li>text text 2</li>
-                            <li>text 3</li>
+                            <li>text text text 3</li>
                         </ul>
                     </div>
                     <div className="py-3">
-                        <h1 className="font-bold">title2</h1>
+                        <h1 className="font-bold">Title 2</h1>
                         <ul className="mt-2">
                             <li>text 1</li>
                             <li>text text 2</li>
-                            <li>text 3</li>
+                            <li>text text text 3</li>
                         </ul>
                     </div>
                     <div className="py-3">
-                        <h1 className="font-bold">title3</h1>
+                        <h1 className="font-bold">Title 3</h1>
                         <ul className="mt-2">
                             <li>text 1</li>
                             <li>text text 2</li>
-                            <li>text 3</li>
+                            <li>text text text 3</li>
                         </ul>
                     </div>
                     <div className="py-3">
-                        <h1 className="font-bold">title3</h1>
+                        <h1 className="font-bold">Title 4</h1>
                         <ul className="mt-2">
                             <li>text 1</li>
                             <li>text text 2</li>
-                            <li>text 3</li>
+                            <li>text text text 3</li>
                         </ul>
                     </div>
                 </div>

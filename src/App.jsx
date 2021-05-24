@@ -26,18 +26,22 @@ function App() {
             <img
               className="absolute bottom-0"
               src="https://s2.coinmarketcap.com/static/cloud/img/portfolio/home/ellipse-left.png?_=f3cd81e"
+              alt="ellipse-left"
             />
             <img
               className="absolute -right-2 lg:-right-12 -top-4"
               src="https://s2.coinmarketcap.com/static/cloud/img/portfolio/home/ellipse-right.png?_=f3cd81e"
+              alt="ellipse-right"
             />
             <img
               className="absolute transform w-full lg:left-4"
               src="https://s2.coinmarketcap.com/static/cloud/img/portfolio/home/safari-lightmode.png?_=f3cd81e"
+              alt="safari-lightmode"
             />
             <img
-              className="absolute w-1/3 top-3 -right-2 lg:right-4 lg:right-0 lg:top-8"
+              className="absolute w-1/3 top-3 -right-2 lg:right-4 lg:top-8"
               src="https://s2.coinmarketcap.com/static/cloud/img/portfolio/home/preview-mobile.png?_=f3cd81e"
+              alt="preview-mobile"
             />
           </div>
         </div>
@@ -65,22 +69,22 @@ function App() {
         </div>
         <div className="container grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 lg:pl-4">
           <div className="bg-gray-100 rounded-3xl p-8">
-            <img className="mb-4" src="https://s2.coinmarketcap.com/static/cloud/img/portfolio/home/intro-icon-0.svg?_=65f30fb" />
+            <img className="mb-4" src="https://s2.coinmarketcap.com/static/cloud/img/portfolio/home/intro-icon-0.svg?_=65f30fb" alt="intro-icon" />
             <h1 className="font-bold">Real-time price data</h1>
             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusantium, deserunt?</p>
           </div>
           <div className="bg-gray-100 rounded-3xl p-8">
-            <img className="mb-4" src="https://s2.coinmarketcap.com/static/cloud/img/portfolio/home/intro-icon-1.svg?_=65f30fb" />
+            <img className="mb-4" src="https://s2.coinmarketcap.com/static/cloud/img/portfolio/home/intro-icon-1.svg?_=65f30fb" alt="intro-icon" />
             <h1 className="font-bold">Real-time price data</h1>
             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusantium, deserunt?</p>
           </div>
           <div className="bg-gray-100 rounded-3xl p-8">
-            <img className="mb-4" src="https://s2.coinmarketcap.com/static/cloud/img/portfolio/home/intro-icon-2.svg?_=65f30fb" />
+            <img className="mb-4" src="https://s2.coinmarketcap.com/static/cloud/img/portfolio/home/intro-icon-2.svg?_=65f30fb" alt="intro-icon" />
             <h1 className="font-bold">Real-time price data</h1>
             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusantium, deserunt?</p>
           </div>
           <div className="bg-gray-100 rounded-3xl p-8">
-            <img className="mb-4" src="https://s2.coinmarketcap.com/static/cloud/img/portfolio/home/intro-icon-3.svg?_=65f30fb" />
+            <img className="mb-4" src="https://s2.coinmarketcap.com/static/cloud/img/portfolio/home/intro-icon-3.svg?_=65f30fb" alt="intro-icon" />
             <h1 className="font-bold">Real-time price data</h1>
             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusantium, deserunt?</p>
           </div>

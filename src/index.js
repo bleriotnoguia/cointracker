@@ -4,7 +4,7 @@ import './index.css';
 import App from './App.jsx';
 import Portfolio from './Portfolio.jsx'
 import Navbar from './Navbar.jsx'
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import reportWebVitals from './reportWebVitals';
 import Footer from './Footer.jsx'
 
