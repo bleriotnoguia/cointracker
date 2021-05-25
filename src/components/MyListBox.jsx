@@ -2,13 +2,13 @@ import { Fragment, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 
-const people = [
+const currencies = [
   { name: "USD" },
   { name: "XAF" }
 ];
 
 export default function MyListBox() {
-  const [selected, setSelected] = useState(people[0]);
+  const [selected, setSelected] = useState(currencies[0]);
 
   return (
       <Listbox value={selected} onChange={setSelected}>
@@ -35,9 +35,9 @@ export default function MyListBox() {
                   static
                   className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-10"
                 >
-                  {people.map((person, personIdx) => (
+                  {currencies.map((currency, currencyIdx) => (
                     <Listbox.Option
-                      key={personIdx}
+                      key={currencyIdx}
                       className={({ active }) =>
                         `${
                           active
@@ -46,7 +46,7 @@ export default function MyListBox() {
                         }
                           cursor-default select-none relative py-1 pl-4 pr-2`
                       }
-                      value={person}
+                      value={currency}
                     >
                       {({ selected, active }) => (
                         <>
@@ -55,7 +55,7 @@ export default function MyListBox() {
                               selected ? "font-medium" : "font-normal"
                             } block truncate`}
                           >
-                            {person.name}
+                            {currency.name}
                           </span>
                         </>
                       )}

@@ -5,16 +5,15 @@ import { CheckIcon, SelectorIcon,  } from '@heroicons/react/solid'
 import { FaTimes } from 'react-icons/fa'
 
 const coins = [
-    { id: 1, name: 'Bitcoin', unavailable: false },
-    { id: 2, name: 'Ethereum', unavailable: false },
-    { id: 3, name: 'Cardano', unavailable: false },
-    { id: 4, name: 'Polkadot', unavailable: true },
-    { id: 5, name: 'Cosmos', unavailable: false },
+    { id: 1, name: 'Bitcoin' },
+    { id: 1027, name: 'Ethereum' },
+    { id: 2010, name: 'Cardano' },
+    { id: 6636, name: 'Polkadot' },
+    { id: 3794, name: 'Cosmos' },
   ]
 
 const MyDialog = forwardRef((props, ref) => {
     const [open, setOpen] = useState(false);
-    const [selectedCoin, setSelectedCoin] = useState(coins[0])
     const cancelButtonRef = useRef();
     
     function closeModal() {
@@ -85,60 +84,7 @@ const MyDialog = forwardRef((props, ref) => {
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-600">Select coin</p>
-                    <Listbox value={selectedCoin} onChange={setSelectedCoin}>
-                        <div className="relative mt-1">
-                        <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
-                            <span className="block truncate">{selectedCoin.name}</span>
-                            <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                            <SelectorIcon
-                                className="w-5 h-5 text-gray-400"
-                                aria-hidden="true"
-                            />
-                            </span>
-                        </Listbox.Button>
-                        <Transition
-                            as={Fragment}
-                            leave="transition ease-in duration-100"
-                            leaveFrom="opacity-100"
-                            leaveTo="opacity-0"
-                        >
-                            <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                            {coins.map((coin, coinIdx) => (
-                                <Listbox.Option
-                                key={coinIdx}
-                                className={({ active }) =>
-                                    `${active ? 'text-amber-900 bg-amber-100' : 'text-gray-900'}
-                                        cursor-default select-none relative py-2 pl-10 pr-4`
-                                }
-                                value={coin}
-                                >
-                                {({ selectedCoin, active }) => (
-                                    <>
-                                    <span
-                                        className={`${
-                                        selectedCoin ? 'font-medium' : 'font-normal'
-                                        } block truncate`}
-                                    >
-                                        {coin.name}
-                                    </span>
-                                    {selectedCoin ? (
-                                        <span
-                                        className={`${
-                                            active ? 'text-amber-600' : 'text-amber-600'
-                                        }
-                                                absolute inset-y-0 left-0 flex items-center pl-3`}
-                                        >
-                                        <CheckIcon className="w-5 h-5" aria-hidden="true" />
-                                        </span>
-                                    ) : null}
-                                    </>
-                                )}
-                                </Listbox.Option>
-                            ))}
-                            </Listbox.Options>
-                        </Transition>
-                        </div>
-                    </Listbox>
+                    <CoinListBox />
                   </div>
                   <div className="mt-3">
                     <label htmlFor="price" className="block text-sm font-medium text-gray-600">
@@ -154,7 +100,7 @@ const MyDialog = forwardRef((props, ref) => {
                         />
                     </div>
                   </div>
-                  <div className="mt-4">
+                  <div className="mt-4 flex justify-between items-center text-gray-600">
                     <button
                       type="button"
                       className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
@@ -162,6 +108,9 @@ const MyDialog = forwardRef((props, ref) => {
                     >
                       Save
                     </button>
+                    <div>
+                      <span className="font-bold">Total :</span> Quantity x Price
+                    </div>
                   </div>
                 </div>
               </Transition.Child>
@@ -172,3 +121,51 @@ const MyDialog = forwardRef((props, ref) => {
   })
 
   export default MyDialog;
+
+ function CoinListBox(){
+   const [selectedCoin, setSelectedCoin] = useState(coins[0])
+
+   return <Listbox value={selectedCoin} onChange={setSelectedCoin}>
+              <div className="relative mt-1">
+              <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
+                  <span className="block truncate">{selectedCoin.name}</span>
+                  <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                  <SelectorIcon
+                      className="w-5 h-5 text-gray-400"
+                      aria-hidden="true"
+                  />
+                  </span>
+              </Listbox.Button>
+              <Transition
+                  as={Fragment}
+                  leave="transition ease-in duration-100"
+                  leaveFrom="opacity-100"
+                  leaveTo="opacity-0"
+              >
+                  <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                  {coins.map((coin, coinIdx) => (
+                      <Listbox.Option
+                      key={coinIdx}
+                      className={({ active }) =>
+                          `${active ? 'text-amber-900 bg-amber-100' : 'text-gray-900'}
+                              cursor-default select-none relative py-2 pl-4 pr-4`
+                      }
+                      value={coin}
+                      >
+                      <div className="flex">
+                            <img
+                              className="mr-2 w-5 md:w-6"
+                              src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${coin.id}.png`}
+                              alt={coin.name}
+                            />
+                            <span className={'font-normal block truncate'} >
+                                {coin.name}
+                            </span>
+                          </div>
+                      </Listbox.Option>
+                  ))}
+                  </Listbox.Options>
+              </Transition>
+              </div>
+          </Listbox>
+  }
