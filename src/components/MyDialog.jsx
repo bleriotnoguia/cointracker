@@ -1,8 +1,9 @@
 import { Fragment, useRef, forwardRef, useState, useImperativeHandle } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Listbox } from '@headlessui/react'
-import { CheckIcon, SelectorIcon,  } from '@heroicons/react/solid'
-import { FaTimes } from 'react-icons/fa'
+import { SelectorIcon,  } from '@heroicons/react/solid'
+import { FaTimes, FaSearch } from 'react-icons/fa'
+import axios from "axios";
 
 const coins = [
     { id: 1, name: 'Bitcoin' },
@@ -14,15 +15,36 @@ const coins = [
 
 const MyDialog = forwardRef((props, ref) => {
     const [open, setOpen] = useState(false);
+    const [activeSearch, setActiveSearch] = useState(false);
+    const [searchItem, setSearchItem] = useState('')
     const cancelButtonRef = useRef();
     
     function closeModal() {
       setOpen(false);
     }
-    
-    // function openModal() {
-    //   setOpen(true);
-    // }
+
+    function saveCoin(){
+      setOpen(false);
+    }
+
+    function handleOnFocus(){
+      setActiveSearch(true);
+    }
+
+    function handleOnBlur(){
+      setActiveSearch(false)
+    }
+
+    function handleOnChange(e){
+      setSearchItem(e.target.value)
+      // Aller recuperer la liste des 10 premieres selections
+
+      // axios.get
+
+      // Au bout du scroll on recuperère les 10 prochaines selections
+
+      // console.log(searchItem)
+    }
   
     useImperativeHandle(
       ref,
@@ -55,7 +77,6 @@ const MyDialog = forwardRef((props, ref) => {
               >
                 <Dialog.Overlay className="fixed inset-0" />
               </Transition.Child>
-  
               {/* This element is to trick the browser into centering the modal contents. */}
               <span
                 className="inline-block h-screen align-middle"
@@ -84,7 +105,32 @@ const MyDialog = forwardRef((props, ref) => {
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-600">Select coin</p>
-                    <CoinListBox />
+                    <div className="mt-1 relative rounded-md shadow-md">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <span className="text-gray-500 sm:text-sm"><FaSearch /></span>
+                      </div>
+                      <input
+                          type="text"
+                          name="price"
+                          id="price"
+                          value={searchItem}
+                          className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-9 pr-12 sm:text-sm border-gray-300 rounded-md py-2"
+                          placeholder="Search"
+                          onChange={handleOnChange}
+                          onFocus={handleOnFocus}
+                          onBlur={handleOnBlur}
+                      />
+                      {activeSearch ? <div className="rounded-md bg-white shadow-md absolute mt-1 w-full overflow-y-auto overflow-x-hidden h-32">
+                        <ul className="px-3 py-2">
+                          {coins.map((coin, index) => <li className="flex items-center my-1" key={index}> <img
+                            className="mr-2 w-4 h-4 md:w-5 md:h-5"
+                            src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${coin.id}.png`}
+                            alt={coin.name}
+                            />{coin.name}</li>
+                          )}
+                        </ul>
+                      </div> : ''}
+                    </div>
                   </div>
                   <div className="mt-3">
                     <label htmlFor="price" className="block text-sm font-medium text-gray-600">
@@ -104,7 +150,7 @@ const MyDialog = forwardRef((props, ref) => {
                     <button
                       type="button"
                       className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                      onClick={closeModal}
+                      onClick={saveCoin}
                     >
                       Save
                     </button>
@@ -142,7 +188,7 @@ const MyDialog = forwardRef((props, ref) => {
                   leaveFrom="opacity-100"
                   leaveTo="opacity-0"
               >
-                  <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                  <Listbox.Options className="w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                   {coins.map((coin, coinIdx) => (
                       <Listbox.Option
                       key={coinIdx}
