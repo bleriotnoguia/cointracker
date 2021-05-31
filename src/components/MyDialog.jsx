@@ -1,22 +1,14 @@
-import { Fragment, useRef, forwardRef, useState, useImperativeHandle } from "react";
+import { Fragment, useRef, useEffect, forwardRef, useState, useImperativeHandle } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { Listbox } from '@headlessui/react'
-import { SelectorIcon,  } from '@heroicons/react/solid'
 import { FaTimes, FaSearch } from 'react-icons/fa'
-import axios from "axios";
-
-const coins = [
-    { id: 1, name: 'Bitcoin' },
-    { id: 1027, name: 'Ethereum' },
-    { id: 2010, name: 'Cardano' },
-    { id: 6636, name: 'Polkadot' },
-    { id: 3794, name: 'Cosmos' },
-  ]
+import { ChevronDownIcon } from "@heroicons/react/solid";
 
 const MyDialog = forwardRef((props, ref) => {
     const [open, setOpen] = useState(false);
     const [activeSearch, setActiveSearch] = useState(false);
     const [searchItem, setSearchItem] = useState('')
+    const [coins, setCoins] = useState([])
+    const [item, setItem] = useState({coin: '', quantity: ''})
     const cancelButtonRef = useRef();
     
     function closeModal() {
@@ -24,6 +16,17 @@ const MyDialog = forwardRef((props, ref) => {
     }
 
     function saveCoin(){
+      if(!localStorage.getItem('holdings')){
+        localStorage.setItem('holdings', JSON.stringify([]))
+      }
+      var holdings = JSON.parse(localStorage.getItem('holdings'))
+      // Check if coins already exist
+      if(holdings.find(elt => elt.coin.id == item.coin.id)){
+        holdings = holdings.filter(elt2 => elt2.coin.id !== item.coin.id)
+      }
+      holdings.push({'coin': item.coin, 'quantity': item.quantity})
+      props.porfolioSetHoldings(holdings)
+      localStorage.setItem('holdings', JSON.stringify(holdings))
       setOpen(false);
     }
 
@@ -31,25 +34,38 @@ const MyDialog = forwardRef((props, ref) => {
       setActiveSearch(true);
     }
 
-    function handleOnBlur(){
+    function handleSearchInput(e){
+      var result;
+      var val = e.target.value;
+      setSearchItem(val)
+      
+      result = props.all_coins.filter(coin => coin.name.toLowerCase().indexOf(val) > -1);
+      setCoins(result)
+    }
+
+    function handleQuantityInput(e){
+      setItem({...item, quantity: e.target.value})
+    }
+
+    function handleSelectedCoin(coin){
       setActiveSearch(false)
+      setItem({...item, coin: coin})
     }
 
-    function handleOnChange(e){
-      setSearchItem(e.target.value)
-      // Aller recuperer la liste des 10 premieres selections
-
-      // axios.get
-
-      // Au bout du scroll on recuperère les 10 prochaines selections
-
-      // console.log(searchItem)
-    }
+    useEffect(() => {
+      setCoins(props.all_coins.slice(0,5))
+    }, [props])
   
     useImperativeHandle(
       ref,
       () => ({
-        openModal() {
+        openModal(item) {
+          if(item){
+            setItem(item)
+          }else{
+            setItem({coin: '', quantity: ''})
+          }
+          setSearchItem('')
           setOpen(true);
         }
       }),
@@ -105,24 +121,39 @@ const MyDialog = forwardRef((props, ref) => {
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-600">Select coin</p>
-                    <div className="mt-1 relative rounded-md shadow-md">
+                    {item.coin ? <div className="mt-1 flex items-center justify-between px-2 rounded-md shadow-md">
+                      <div>
+                        <img
+                            className="mr-2 w-4 h-4 md:w-5 md:h-5"
+                            src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${item.coin.id}.png`}
+                            alt={item.coin.name}
+                            />
+                      </div>
+                      <div className="w-full pl-1 pr-2 sm:text-sm border-gray-300 rounded-md py-2 text-gray-600" onClick={() => setItem({coin: '', quantity: ''})}>
+                        {item.coin.name + ' ' + item.coin.symbol + ' - '}<span className="font-bold">${item.coin.quote.USD.price.toFixed(2)}</span>
+                      </div>
+                      <div className="w-6">
+                        <span className="text-gray-500 sm:text-sm"><ChevronDownIcon /></span>
+                      </div>
+                      </div> : <div className="mt-1 relative rounded-md shadow-md">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <span className="text-gray-500 sm:text-sm"><FaSearch /></span>
                       </div>
                       <input
+                          autoComplete="off"
+                          autoFocus
                           type="text"
-                          name="price"
-                          id="price"
+                          name="quantity"
+                          id="quantity"
                           value={searchItem}
                           className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-9 pr-12 sm:text-sm border-gray-300 rounded-md py-2"
                           placeholder="Search"
-                          onChange={handleOnChange}
+                          onChange={handleSearchInput}
                           onFocus={handleOnFocus}
-                          onBlur={handleOnBlur}
                       />
-                      {activeSearch ? <div className="rounded-md bg-white shadow-md absolute mt-1 w-full overflow-y-auto overflow-x-hidden h-32">
+                      {activeSearch ? <div className="rounded-md bg-white shadow-md absolute mt-1 w-full overflow-y-auto overflow-x-hidden max-h-32">
                         <ul className="px-3 py-2">
-                          {coins.map((coin, index) => <li className="flex items-center my-1" key={index}> <img
+                          {coins.map((coin, index) => <li className="flex items-center my-1 rounded-md cursor-pointer hover:bg-gray-200" key={index} onClick={() => handleSelectedCoin(coin)}> <img
                             className="mr-2 w-4 h-4 md:w-5 md:h-5"
                             src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${coin.id}.png`}
                             alt={coin.name}
@@ -130,7 +161,8 @@ const MyDialog = forwardRef((props, ref) => {
                           )}
                         </ul>
                       </div> : ''}
-                    </div>
+                    </div>}
+                    
                   </div>
                   <div className="mt-3">
                     <label htmlFor="price" className="block text-sm font-medium text-gray-600">
@@ -141,21 +173,25 @@ const MyDialog = forwardRef((props, ref) => {
                             type="text"
                             name="price"
                             id="price"
+                            value={item.quantity}
+                            autoComplete="off"
                             className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-4 pr-12 sm:text-sm border-gray-300 rounded-md py-2"
                             placeholder="0.00"
+                            onChange={handleQuantityInput}
                         />
                     </div>
                   </div>
                   <div className="mt-4 flex justify-between items-center text-gray-600">
                     <button
+                      disabled={item.coin && item.quantity ? false : true}
                       type="button"
                       className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                      onClick={saveCoin}
+                      onClick={() => saveCoin()}
                     >
                       Save
                     </button>
                     <div>
-                      <span className="font-bold">Total :</span> Quantity x Price
+                      <span className="font-bold">Total : ${item.coin ? (item.quantity * item.coin.quote.USD.price).toFixed(2) : 0}</span>
                     </div>
                   </div>
                 </div>
@@ -167,51 +203,3 @@ const MyDialog = forwardRef((props, ref) => {
   })
 
   export default MyDialog;
-
- function CoinListBox(){
-   const [selectedCoin, setSelectedCoin] = useState(coins[0])
-
-   return <Listbox value={selectedCoin} onChange={setSelectedCoin}>
-              <div className="relative mt-1">
-              <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
-                  <span className="block truncate">{selectedCoin.name}</span>
-                  <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                  <SelectorIcon
-                      className="w-5 h-5 text-gray-400"
-                      aria-hidden="true"
-                  />
-                  </span>
-              </Listbox.Button>
-              <Transition
-                  as={Fragment}
-                  leave="transition ease-in duration-100"
-                  leaveFrom="opacity-100"
-                  leaveTo="opacity-0"
-              >
-                  <Listbox.Options className="w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                  {coins.map((coin, coinIdx) => (
-                      <Listbox.Option
-                      key={coinIdx}
-                      className={({ active }) =>
-                          `${active ? 'text-amber-900 bg-amber-100' : 'text-gray-900'}
-                              cursor-default select-none relative py-2 pl-4 pr-4`
-                      }
-                      value={coin}
-                      >
-                      <div className="flex">
-                            <img
-                              className="mr-2 w-5 md:w-6"
-                              src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${coin.id}.png`}
-                              alt={coin.name}
-                            />
-                            <span className={'font-normal block truncate'} >
-                                {coin.name}
-                            </span>
-                          </div>
-                      </Listbox.Option>
-                  ))}
-                  </Listbox.Options>
-              </Transition>
-              </div>
-          </Listbox>
-  }
