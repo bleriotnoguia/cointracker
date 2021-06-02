@@ -53,6 +53,12 @@ export default function Portfolio(props) {
   return (
     <>
       <div className="bg-gradient-to-b from-gray-100 via-white to-gray-100 pt-6">
+          <div className="container md:w-2/3 xl:w-1/2 mx-auto px-4 pt-4 pb-6">
+            <h1 className="font-bold text-center md:text-left text-gray-800 text-4xl">
+              MarketCap
+            </h1>
+            <p className="text-xl">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vel, maxime?</p>
+          </div>
           <div className="container md:w-2/3 xl:w-1/2 mx-auto px-4 pb-6">
             <table className="table-auto text-center" style={{width: "100%"}}>
               <thead>

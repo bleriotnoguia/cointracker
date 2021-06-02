@@ -19,6 +19,12 @@ export default function Home() {
                         >
                         Your portfolio
                         </Link>
+                        <Link
+                        to="/marketcap"
+                        className="mt-5 px-5 py-3 ali inline-block border-2 ml-2 border-blue-600 text-blue-600 bg-white font-bold rounded-lg"
+                        >
+                        MarketCap
+                        </Link>
                     </div>
                     </div>
                     <div className="md:w-1/2 -ml-3 lg:pl-16">

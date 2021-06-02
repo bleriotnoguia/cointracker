@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import axios from "axios";
 import { ReactComponent as EyeClose } from "../img/eye-close.svg";
 import MyDialog from "../components/MyDialog";
-import { FaPencilAlt, FaTrashAlt, FaSyncAlt } from "react-icons/fa";
+import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import defaultCoins from '../data.json'
 
 export default function Portfolio() {
@@ -67,18 +67,18 @@ export default function Portfolio() {
   return (
     <>
       <div className="bg-gradient-to-b from-gray-100 via-white to-gray-100">
+        <div className="container md:w-2/3 xl:w-1/2 mx-auto px-4 pt-6 pb-6">
+          <h1 className="font-bold text-center md:text-left text-gray-800 text-4xl">
+            Portfolio
+          </h1>
+          <p className="text-xl">Track your investment performance</p>
+        </div>
         <div className="container md:w-2/3 xl:w-1/2 flex flex-col md:flex-row justify-between items-center mx-auto px-4 py-4">
-          <div className="flex-grow" style={{ flexBasis: "0" }}>
-            <h1 className="font-bold text-center md:text-left text-gray-800 text-4xl">
-              Portfolio
-            </h1>
-            <p className="text-xl">Track your investment performance</p>
-          </div>
           <div
             className="flex-grow my-2 mx-2"
             style={{ flexBasis: "0", width: "80%" }}
           >
-            <div className="w-52 md:w-40 lg:w-52 bg-white rounded-md mx-auto px-8 md:px-4 lg:px-8 py-3">
+            <div className="w-52 md:w-40 lg:w-52 bg-white rounded-md border border-gray-300 px-8 md:px-4 lg:px-8 py-3">
               <p className="text-sm flex">
                 Current Balance{" "}
                 <EyeClose className="inline h-5 ml-1 cursor-pointer" />
@@ -100,12 +100,6 @@ export default function Portfolio() {
               onClick={() => alertRef.current.openModal()}
             >
               + Add new coin
-            </button>
-            <button
-              className="px-4 py-2 mt-2 bg-blue-600 text-white font-bold rounded-md min-w-max flex items-center"
-              onClick={() => updateCoins()}
-            >
-              <FaSyncAlt className="mr-2" /> Refresh
             </button>
           </div>
         </div>
