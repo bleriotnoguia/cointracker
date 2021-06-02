@@ -8,6 +8,7 @@ const MyDialog = forwardRef((props, ref) => {
     const [activeSearch, setActiveSearch] = useState(false);
     const [searchItem, setSearchItem] = useState('')
     const [coins, setCoins] = useState([])
+    const [all_coins, setAllCoins] = useState([])
     const [item, setItem] = useState({coin: '', quantity: ''})
     const cancelButtonRef = useRef();
     
@@ -39,7 +40,7 @@ const MyDialog = forwardRef((props, ref) => {
       var val = e.target.value;
       setSearchItem(val)
       
-      result = props.all_coins.filter(coin => coin.name.toLowerCase().indexOf(val) > -1);
+      result = all_coins.filter(coin => coin.name.toLowerCase().indexOf(val) > -1);
       setCoins(result)
     }
 
@@ -53,7 +54,8 @@ const MyDialog = forwardRef((props, ref) => {
     }
 
     useEffect(() => {
-      setCoins(props.all_coins.slice(0,5))
+      setCoins(all_coins.slice(0,5))
+      setAllCoins(JSON.parse(localStorage.getItem("coins")));
     }, [props])
   
     useImperativeHandle(
@@ -143,8 +145,8 @@ const MyDialog = forwardRef((props, ref) => {
                           autoComplete="off"
                           autoFocus
                           type="text"
-                          name="quantity"
-                          id="quantity"
+                          name="coin"
+                          id="coin"
                           value={searchItem}
                           className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-9 pr-12 sm:text-sm border-gray-300 rounded-md py-2"
                           placeholder="Search"
@@ -170,12 +172,12 @@ const MyDialog = forwardRef((props, ref) => {
                     </label>
                     <div className="mt-1 rounded-md shadow-md">
                         <input
-                            type="text"
-                            name="price"
-                            id="price"
+                            type="number"
+                            name="quantity"
+                            id="quantity"
                             value={item.quantity}
                             autoComplete="off"
-                            className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-4 pr-12 sm:text-sm border-gray-300 rounded-md py-2"
+                            className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-4 pr-2 sm:text-sm border-gray-300 rounded-md py-2"
                             placeholder="0.00"
                             onChange={handleQuantityInput}
                         />
