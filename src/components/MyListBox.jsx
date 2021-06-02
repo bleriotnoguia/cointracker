@@ -15,7 +15,7 @@ export default function MyListBox() {
         {({ open }) => (
           <>
             <div className="relative">
-              <Listbox.Button className="flex w-full py-1 pl-2 pr-1 text-left bg-white rounded-lg shadow-sm cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
+              <Listbox.Button className="flex w-full py-1 pl-2 pr-1 text-left bg-white rounded-lg cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
                 <span className="block truncate">{selected.name}</span>
                 <span className="inset-y-0 right-0 flex items-center pl-1 pointer-events-none">
                   <ChevronDownIcon
