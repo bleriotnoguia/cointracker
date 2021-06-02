@@ -10,19 +10,21 @@ function App() {
   return (
     <React.StrictMode>
       <Router>
-        <Navbar />
-        <Switch>
-          <Route path="/" exact>
-            <Home />
-          </Route>
-          <Route path="/portfolio">
-            <Portfolio />
-          </Route>
-          <Route path="/marketcap">
-            <MarketCap perPage={50} />
-          </Route>
-        </Switch>
-        <Footer />
+        <div className="dark:bg-gray-900" style={{minHeight: "100vh"}}>
+          <Navbar />
+          <Switch>
+            <Route path="/" exact>
+              <Home />
+            </Route>
+            <Route path="/portfolio">
+              <Portfolio />
+            </Route>
+            <Route path="/marketcap">
+              <MarketCap perPage={50} />
+            </Route>
+          </Switch>
+          <Footer />
+        </div>
       </Router>
   </React.StrictMode>
   );

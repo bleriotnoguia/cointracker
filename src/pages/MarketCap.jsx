@@ -52,9 +52,9 @@ export default function Portfolio(props) {
 
   return (
     <>
-      <div className="bg-gradient-to-b from-gray-100 via-white to-gray-100 pt-6">
+      <div className="bg-gradient-to-b from-gray-100 dark:from-gray-700 to-gray-50 dark:to-gray-800 pt-6 dark:text-gray-200">
           <div className="container md:w-2/3 xl:w-1/2 mx-auto px-4 pt-4 pb-6">
-            <h1 className="font-bold text-center md:text-left text-gray-800 text-4xl">
+            <h1 className="font-bold text-center md:text-left text-gray-80 dark:text-white text-4xl">
               MarketCap
             </h1>
             <p className="text-xl">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vel, maxime?</p>

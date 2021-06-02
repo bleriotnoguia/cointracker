@@ -66,9 +66,9 @@ export default function Portfolio() {
 
   return (
     <>
-      <div className="bg-gradient-to-b from-gray-100 via-white to-gray-100">
+      <div className="bg-gradient-to-b from-gray-100 dark:from-gray-700 to-gray-50 dark:to-gray-800 pt-6 dark:text-gray-200">
         <div className="container md:w-2/3 xl:w-1/2 mx-auto px-4 pt-6 pb-6">
-          <h1 className="font-bold text-center md:text-left text-gray-800 text-4xl">
+          <h1 className="font-bold text-center md:text-left text-gray-800 dark:text-white text-4xl">
             Portfolio
           </h1>
           <p className="text-xl">Track your investment performance</p>
@@ -78,12 +78,12 @@ export default function Portfolio() {
             className="flex-grow my-2 mx-2"
             style={{ flexBasis: "0", width: "80%" }}
           >
-            <div className="w-52 md:w-40 lg:w-52 bg-white rounded-md border border-gray-300 px-8 md:px-4 lg:px-8 py-3">
+            <div className="w-52 md:w-40 lg:w-52 bg-white dark:bg-gray-700 rounded-md border border-gray-300 px-8 md:px-4 lg:px-8 py-3">
               <p className="text-sm flex">
                 Current Balance{" "}
                 <EyeClose className="inline h-5 ml-1 cursor-pointer" />
               </p>
-              <h1 className="font-bold text-gray-700 text-3xl">
+              <h1 className="font-bold text-gray-700 dark:text-white text-3xl">
                 ${getTotal().toFixed(2)}
               </h1>
               <h3 className="text-green-500 text-right font-medium text-sm">
@@ -129,7 +129,7 @@ export default function Portfolio() {
                       ${item.coin.quote.USD.price.toFixed(2)}
                     </td>
                     <td className="text-right py-1.5">
-                      <span className="font-medium text-gray-800">
+                      <span className="font-medium text-gray-800 dark:text-gray-200">
                         ${(item.coin.quote.USD.price * item.quantity).toFixed(2)}
                       </span>
                       <br />
@@ -137,7 +137,7 @@ export default function Portfolio() {
                     </td>
                     <td className="flex justify-end py-1.5">
                       <span
-                        className="text-gray-800 cursor-pointer"
+                        className="text-gray-800 cursor-pointer dark:text-gray-200"
                         onClick={() => alertRef.current.openModal(item)}
                       >
                         <FaPencilAlt />

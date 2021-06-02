@@ -15,7 +15,7 @@ export default function MyListBox() {
         {({ open }) => (
           <>
             <div className="relative">
-              <Listbox.Button className="flex w-full py-1 pl-2 pr-1 text-left bg-white rounded-lg cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
+              <Listbox.Button className="flex w-full py-1 pl-2 text-left rounded-lg cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
                 <span className="block truncate">{selected.name}</span>
                 <span className="inset-y-0 right-0 flex items-center pl-1 pointer-events-none">
                   <ChevronDownIcon
@@ -33,7 +33,7 @@ export default function MyListBox() {
               >
                 <Listbox.Options
                   static
-                  className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-10"
+                  className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white dark:bg-gray-600 rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-10"
                 >
                   {currencies.map((currency, currencyIdx) => (
                     <Listbox.Option
@@ -42,7 +42,7 @@ export default function MyListBox() {
                         `${
                           active
                             ? "text-amber-900 bg-amber-100"
-                            : "text-gray-900"
+                            : "text-gray-900 dark:text-gray-100"
                         }
                           cursor-default select-none relative py-1 pl-4 pr-2`
                       }
