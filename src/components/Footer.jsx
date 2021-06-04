@@ -1,6 +1,10 @@
 import React from "react";
+import {useSelector} from 'react-redux'
 
 export default function Footer() {
+  const settings = useSelector(state => state.settings)
+  const {isDarkMode} = settings
+
   return (
     <div className="container px-4 mx-auto py-8 dark:text-gray-200">
       <div className="flex flex-col lg:flex-row lg:justify-between">
@@ -8,9 +12,9 @@ export default function Footer() {
           <img
             className="h-7"
             src={
-              (localStorage.theme && localStorage.theme === 'black')
-                ? "https://s2.coinmarketcap.com/static/cloud/img/coinmarketcap_1.svg"
-                : "https://s2.coinmarketcap.com/static/cloud/img/coinmarketcap_white_1.svg"
+              isDarkMode
+                ? "https://s2.coinmarketcap.com/static/cloud/img/coinmarketcap_white_1.svg"
+                : "https://s2.coinmarketcap.com/static/cloud/img/coinmarketcap_1.svg"
             }
             alt=""
           />

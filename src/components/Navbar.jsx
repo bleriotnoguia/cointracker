@@ -1,31 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { FaChartPie, FaMoon, FaSun, FaList, FaSyncAlt } from "react-icons/fa";
 import ReactTooltip from "react-tooltip";
-import MyListBox from "./MyListBox.jsx";
+import {useSelector, useDispatch} from 'react-redux'
+import {updateTheme} from '../actions/settingActions'
+// import MyListBox from "./MyListBox.jsx";
 
 export default function Navbar() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  function updateTheme() {
-    localStorage.theme = !isDarkMode ? "dark" : "";
-    setIsDarkMode(!isDarkMode);
+  const dispatch = useDispatch()
 
-    if (localStorage.theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }
-  useEffect(() => {
-    if (
-      (!("theme" in localStorage) &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches) || (("theme" in localStorage) && localStorage.theme === "dark")
-    ) {
-      localStorage.theme = "dark";
-      setIsDarkMode(true);
-      document.documentElement.classList.add("dark");
-    }
-  }, []);
+  const settings = useSelector(state => state.settings)
+  const {isDarkMode} = settings
+  
   return (
     <div className="container px-4 mx-auto text-gray-700 flex justify-between">
       <div id="logo" className="font-bold py-4">
@@ -71,12 +57,12 @@ export default function Navbar() {
           {isDarkMode ? (
             <FaSun
               className="cursor-pointer"
-              onClick={() => updateTheme()}
+              onClick={() => dispatch(updateTheme())}
             />
           ) : (
             <FaMoon
               className="cursor-pointer"
-              onClick={() => updateTheme()}
+              onClick={() => dispatch(updateTheme())}
             />
           )}
         </li>
