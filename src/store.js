@@ -23,14 +23,14 @@ if (
 
 const perPage = 25
 const isDarkModeFromStorage = localStorage.isDarkMode ? JSON.parse(localStorage.isDarkMode) : false
-const isPrivateFromStorage = localStorage.isPrivate ? JSON.parse(localStorage.isPrivate) : false
+const isPrivateModeFromStorage = localStorage.isPrivateMode ? JSON.parse(localStorage.isPrivateMode) : false
 const offsetFromStorage = localStorage.offset ? localStorage.offset : perPage
 const holdingFromStorage = localStorage.getItem('holdings') ? JSON.parse(localStorage.getItem('holdings')) : []
 
 const initialState = {
   settings: {
     isDarkMode: isDarkModeFromStorage,
-    isPrivate: isPrivateFromStorage
+    isPrivateMode: isPrivateModeFromStorage
   },
   coinList: {
     offset: offsetFromStorage,

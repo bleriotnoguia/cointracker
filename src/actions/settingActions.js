@@ -12,7 +12,7 @@ export const updateTheme = () => async (dispatch, getState) => {
   })
 
   localStorage.isDarkMode = getState().settings.isDarkMode
-  
+
   if(JSON.parse(localStorage.isDarkMode)){
     document.documentElement.classList.add("dark");
   } else {
@@ -21,12 +21,12 @@ export const updateTheme = () => async (dispatch, getState) => {
 }
 
 export const updatePrivacy = () => async (dispatch, getState) => {
-  const {settings: {isPrivate}} = getState()
+  const {settings: {isPrivateMode}} = getState()
 
   dispatch({
     type: UPDATE_HOLDING_PRIVACY,
-    payload: !isPrivate
+    payload: !isPrivateMode
   })
   
-  localStorage.isPrivate = getState().settings.isPrivate
+  localStorage.isPrivateMode = getState().settings.isPrivateMode
 }
