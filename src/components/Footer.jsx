@@ -8,7 +8,7 @@ export default function Footer() {
           <img
             className="h-7"
             src={
-              (localStorage.theme && localStorage.theme == 'black')
+              (localStorage.theme && localStorage.theme === 'black')
                 ? "https://s2.coinmarketcap.com/static/cloud/img/coinmarketcap_1.svg"
                 : "https://s2.coinmarketcap.com/static/cloud/img/coinmarketcap_white_1.svg"
             }

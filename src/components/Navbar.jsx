@@ -64,9 +64,9 @@ export default function Navbar() {
             effect="solid"
           />
         </li>
-        <li>
+        {/* <li>
           <MyListBox />
-        </li>
+        </li> */}
         <li className="p-2" data-tip="Switch theme" data-for="theme">
           {isDarkMode ? (
             <FaSun
@@ -86,6 +86,7 @@ export default function Navbar() {
             data-tip="Refresh data"
             data-for="refresh"
             className="cursor-pointer"
+            onClick={() => window.location.reload()}
           />
           <ReactTooltip
             id="refresh"

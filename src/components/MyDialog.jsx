@@ -2,33 +2,31 @@ import { Fragment, useRef, useEffect, forwardRef, useState, useImperativeHandle 
 import { Dialog, Transition } from "@headlessui/react";
 import { FaTimes, FaSearch } from 'react-icons/fa'
 import { ChevronDownIcon } from "@heroicons/react/solid";
+import {addCoin} from '../actions/holdingActions'
+import {useDispatch, useSelector} from 'react-redux'
+import { searchCoin } from "../actions/coinActions";
 
 const MyDialog = forwardRef((props, ref) => {
     const [open, setOpen] = useState(false);
     const [activeSearch, setActiveSearch] = useState(false);
     const [searchItem, setSearchItem] = useState('')
-    const [coins, setCoins] = useState([])
-    const [item, setItem] = useState({coin: '', quantity: ''})
+    const [item, setItem] = useState({qty: ''})
     const cancelButtonRef = useRef();
-    const all_coins = JSON.parse(localStorage.getItem("coins"))
+
+    const coinSearch = useSelector(state => state.coinSearch)
+    const {coins} = coinSearch
+
+    const dispatch = useDispatch()
     
     function closeModal() {
+      setSearchItem('')
+      setItem({qty: ''})
       setOpen(false);
     }
 
     function saveCoin(){
-      if(!localStorage.getItem('holdings')){
-        localStorage.setItem('holdings', JSON.stringify([]))
-      }
-      var holdings = JSON.parse(localStorage.getItem('holdings'))
-      // Check if coins already exist
-      if(holdings.find(elt => elt.coin.id == item.coin.id)){
-        holdings = holdings.filter(elt2 => elt2.coin.id !== item.coin.id)
-      }
-      holdings.push({'coin': item.coin, 'quantity': item.quantity})
-      props.porfolioSetHoldings(holdings)
-      localStorage.setItem('holdings', JSON.stringify(holdings))
-      setOpen(false);
+      dispatch(addCoin(item.id, item.qty));
+      closeModal();
     }
 
     function handleOnFocus(){
@@ -36,26 +34,23 @@ const MyDialog = forwardRef((props, ref) => {
     }
 
     function handleSearchInput(e){
-      var result;
       var val = e.target.value;
       setSearchItem(val)
-      
-      result = all_coins.filter(coin => coin.name.toLowerCase().indexOf(val) > -1);
-      setCoins(result)
+      dispatch(searchCoin(val))
     }
 
     function handleQuantityInput(e){
-      setItem({...item, quantity: e.target.value})
+      setItem({...item, qty: e.target.value})
     }
 
     function handleSelectedCoin(coin){
       setActiveSearch(false)
-      setItem({...item, coin: coin})
+      setItem(coin)
     }
 
-    useEffect(() => {
-      setCoins(all_coins.slice(0,5))
-    }, [props])
+    // useEffect(() => {
+    //   dispatch(searchCoin())
+    // }, [props])
   
     useImperativeHandle(
       ref,
@@ -63,10 +58,8 @@ const MyDialog = forwardRef((props, ref) => {
         openModal(item) {
           if(item){
             setItem(item)
-          }else{
-            setItem({coin: '', quantity: ''})
           }
-          setSearchItem('')
+          dispatch(searchCoin())
           setOpen(true);
         }
       }),
@@ -123,16 +116,16 @@ const MyDialog = forwardRef((props, ref) => {
                     </Dialog.Title>
                     <div className="mt-2">
                       <p className="text-sm text-gray-600 dark:text-gray-400">Select coin</p>
-                      {item.coin ? <div className="mt-1 flex items-center justify-between px-2 rounded-md shadow-md bg-white">
+                      {item.name ? <div className="mt-1 flex items-center justify-between px-2 rounded-md shadow-md bg-white">
                         <div>
                           <img
                               className="mr-2 w-4 h-4 md:w-5 md:h-5"
-                              src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${item.coin.id}.png`}
-                              alt={item.coin.name}
+                              src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${item.id}.png`}
+                              alt={item.name}
                               />
                         </div>
-                        <div className="w-full pl-1 pr-2 sm:text-sm border-gray-300 rounded-md py-2 text-gray-600" onClick={() => setItem({coin: '', quantity: ''})}>
-                          {item.coin.name + ' ' + item.coin.symbol + ' - '}<span className="font-bold">${item.coin.quote.USD.price.toFixed(2)}</span>
+                        <div className="w-full pl-1 pr-2 sm:text-sm border-gray-300 rounded-md py-2 text-gray-600" onClick={() => setItem({qty: ''})}>
+                          {item.name + ' ' + item.symbol + ' - '}<span className="font-bold">${item.price.toFixed(2)}</span>
                         </div>
                         <div className="w-6">
                           <span className="text-gray-500 sm:text-sm"><ChevronDownIcon /></span>
@@ -155,7 +148,7 @@ const MyDialog = forwardRef((props, ref) => {
                         />
                         {activeSearch ? <div className="rounded-md bg-white shadow-md absolute mt-1 w-full overflow-y-auto overflow-x-hidden max-h-32">
                           <ul className="px-3 py-2">
-                            {coins.map((coin, index) => <li className="flex items-center my-1 rounded-md cursor-pointer hover:bg-gray-200" key={index} onClick={() => handleSelectedCoin(coin)}> <img
+                            {coins.map((coin, index) => <li className="flex items-center my-1 rounded-md cursor-pointer hover:bg-gray-200" key={index} onClick={() => handleSelectedCoin({...coin, qty: ''})}> <img
                               className="mr-2 w-4 h-4 md:w-5 md:h-5"
                               src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${coin.id}.png`}
                               alt={coin.name}
@@ -175,7 +168,7 @@ const MyDialog = forwardRef((props, ref) => {
                               type="number"
                               name="quantity"
                               id="quantity"
-                              value={item.quantity}
+                              value={item.qty}
                               autoComplete="off"
                               className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-4 pr-2 sm:text-sm border-gray-300 rounded-md py-2"
                               placeholder="0.00"
@@ -185,7 +178,7 @@ const MyDialog = forwardRef((props, ref) => {
                     </div>
                     <div className="mt-4 flex justify-between items-center text-gray-600">
                       <button
-                        disabled={item.coin && item.quantity ? false : true}
+                        disabled={item ? false : true}
                         type="button"
                         className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
                         onClick={() => saveCoin()}
@@ -193,7 +186,7 @@ const MyDialog = forwardRef((props, ref) => {
                         Save
                       </button>
                       <div>
-                        <span className="font-bold text-gray-200">Total : ${item.coin ? (item.quantity * item.coin.quote.USD.price).toFixed(2) : 0}</span>
+                        <span className="font-bold text-gray-200">Total : ${item.qty ? (item.qty * item.price).toFixed(2) : 0}</span>
                       </div>
                     </div>
                 </form>

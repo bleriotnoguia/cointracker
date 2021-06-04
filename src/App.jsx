@@ -20,7 +20,7 @@ function App() {
               <Portfolio />
             </Route>
             <Route path="/marketcap">
-              <MarketCap perPage={50} />
+              <MarketCap />
             </Route>
           </Switch>
           <Footer />

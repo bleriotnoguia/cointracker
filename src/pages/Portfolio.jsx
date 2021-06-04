@@ -1,39 +1,20 @@
 import { useRef, useState, useEffect } from "react";
-import axios from "axios";
 import { ReactComponent as EyeClose } from "../img/eye-close.svg";
 import MyDialog from "../components/MyDialog";
 import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
-import defaultCoins from '../data.json'
+import {useDispatch, useSelector} from 'react-redux'
+import {listHolding, deleteCoin} from '../actions/holdingActions'
 
 export default function Portfolio() {
-  const [holdings, setHoldings] = useState([]);
-  var cmc_api_key = "xxxxx-xxxx-xxxxx-xxxxxxxx-xxxxxxx";
-  var url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=5000";
+  const dispatch = useDispatch()
+
+  const holdingList = useSelector(state => state.holdingList)
+  const {error, holdings} = holdingList
   const alertRef = useRef();
 
-  function updateCoins() {
-    axios
-      .get(url, {
-        headers: {
-          "X-CMC_PRO_API_KEY": cmc_api_key,
-          Accept: "application/json",
-        },
-      })
-      .then(function (response) {
-        localStorage.setItem("coins", JSON.stringify(response.data.data));
-      }).catch(error =>{
-        if(!localStorage.getItem("coins")){
-          localStorage.setItem("coins", JSON.stringify(defaultCoins));
-        }
-        console.log(error)
-      });
-  }
-
-  function deleteCoin(coinId) {
+  function handleDeleteCoin(id) {
     if(window.confirm("Do you realy want to delete this coin ?")){
-      var holdingsUpdated = holdings.filter((item) => item.coin.id !== coinId);
-      localStorage.setItem("holdings", JSON.stringify(holdingsUpdated));
-      setHoldings(holdingsUpdated);
+      dispatch(deleteCoin(id))
     }
   }
 
@@ -41,27 +22,14 @@ export default function Portfolio() {
     return holdings.length
       ? holdings.reduce(
           (total, item) =>
-            parseFloat(total) + item.coin.quote.USD.price * item.quantity,
+            parseFloat(total) + item.price * item.qty,
           0
         )
       : 0;
   }
 
-  function handleSetHolding(new_holdings) {
-    setHoldings(new_holdings);
-  }
-
   useEffect(() => {
-    if (!localStorage.getItem("coins")) {
-      updateCoins();
-    } else {
-      localStorage.setItem("coins", JSON.stringify(defaultCoins));
-    }
-
-    if (localStorage.getItem("holdings")) {
-      var holdings = JSON.parse(localStorage.getItem("holdings"));
-      setHoldings(holdings);
-    }
+    dispatch(listHolding())
   }, []);
 
   return (
@@ -71,14 +39,14 @@ export default function Portfolio() {
           <h1 className="font-bold text-center md:text-left text-gray-800 dark:text-white text-4xl">
             Portfolio
           </h1>
-          <p className="text-xl">Track your investment performance</p>
+          <p className="text-xl text-center md:text-left">Track your investment performance</p>
         </div>
         <div className="container md:w-2/3 xl:w-1/2 flex flex-col md:flex-row justify-between items-center mx-auto px-4 py-4">
           <div
-            className="flex-grow my-2 mx-2"
+            className="flex-grow my-2"
             style={{ flexBasis: "0", width: "80%" }}
           >
-            <div className="w-52 md:w-40 lg:w-52 bg-white dark:bg-gray-700 rounded-md border border-gray-300 px-8 md:px-4 lg:px-8 py-3">
+            <div className="w-52 md:w-40 lg:w-52 bg-white dark:bg-gray-700 rounded-md border border-gray-300 mx-auto md:mx-0 px-8 md:px-4 lg:px-8 py-3">
               <p className="text-sm flex">
                 Current Balance{" "}
                 <EyeClose className="inline h-5 ml-1 cursor-pointer" />
@@ -120,20 +88,20 @@ export default function Portfolio() {
                     <td className="flex items-center text-left py-1.5">
                       <img
                         className="mr-2 w-5 md:w-6"
-                        src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${item.coin.id}.png`}
-                        alt={item.coin.name}
+                        src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${item.id}.png`}
+                        alt={item.name}
                       />
-                      {item.coin.name + " " + item.coin.symbol}
+                      {item.name + " " + item.symbol}
                     </td>
                     <td className="text-right py-1.5">
-                      ${item.coin.quote.USD.price.toFixed(2)}
+                      ${item.price.toFixed(2)}
                     </td>
                     <td className="text-right py-1.5">
                       <span className="font-medium text-gray-800 dark:text-gray-200">
-                        ${(item.coin.quote.USD.price * item.quantity).toFixed(2)}
+                        ${(item.price * item.qty).toFixed(2)}
                       </span>
                       <br />
-                      <span className="text-sm">{item.quantity + ' ' + item.coin.symbol}</span>
+                      <span className="text-sm">{item.qty + ' ' + item.symbol}</span>
                     </td>
                     <td className="flex justify-end py-1.5">
                       <span
@@ -144,7 +112,7 @@ export default function Portfolio() {
                       </span>
                       <span
                         className="text-red-500 ml-2 cursor-pointer"
-                        onClick={() => deleteCoin(item.coin.id)}
+                        onClick={() => handleDeleteCoin(item.id)}
                       >
                         <FaTrashAlt />
                       </span>
@@ -158,7 +126,6 @@ export default function Portfolio() {
       </div>
       <MyDialog
         ref={alertRef}
-        porfolioSetHoldings={handleSetHolding}
       />
     </>
   );
