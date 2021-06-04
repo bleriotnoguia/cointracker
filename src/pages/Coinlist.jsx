@@ -7,7 +7,7 @@ import {listCoins, getCoinStatus} from '../actions/coinActions'
 import {FaChevronRight, FaChevronLeft} from 'react-icons/fa'
 import ReactTooltip from "react-tooltip";
 
-export default function MarketCap() {
+export default function Coinlist() {
   const dispatch = useDispatch()
 
   const coinList = useSelector(state => state.coinList)
@@ -35,7 +35,7 @@ export default function MarketCap() {
       <div className="bg-gradient-to-b from-gray-100 dark:from-gray-700 to-gray-50 dark:to-gray-800 pt-6 dark:text-gray-200">
           <div className="container md:w-2/3 xl:w-1/2 mx-auto px-4 pt-4 pb-6">
             <h1 className="font-bold text-center md:text-left text-gray-80 dark:text-white text-4xl">
-              MarketCap
+              CoinList
             </h1>
             <p className="text-xl">( {totalCount ? (totalCount + ' coins') : ''} ) Lorem ipsum dolor, sit amet consectetur</p>
           </div>

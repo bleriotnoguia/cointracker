@@ -8,6 +8,7 @@ const Message = ({variant, children}) => {
             break;
         case 'danger':
             style = 'bg-red-300 text-white'
+            break;
         default:
             style = 'bg-white text-gray-700'
             break;

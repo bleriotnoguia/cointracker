@@ -4,7 +4,6 @@ import { FaChartPie, FaMoon, FaSun, FaList, FaSyncAlt } from "react-icons/fa";
 import ReactTooltip from "react-tooltip";
 import {useSelector, useDispatch} from 'react-redux'
 import {updateTheme} from '../actions/settingActions'
-// import MyListBox from "./MyListBox.jsx";
 
 export default function Navbar() {
   const dispatch = useDispatch()
@@ -29,11 +28,11 @@ export default function Navbar() {
       </div>
       <ul className="flex items-center dark:text-gray-200">
         <li className="mr-2.5">
-          <Link to="/marketcap" data-tip="Marketcap" data-for="marketcap">
+          <Link to="/coinlist" data-tip="Coin list" data-for="coinlist">
             <FaList />
           </Link>
           <ReactTooltip
-            id="marketcap"
+            id="coinlist"
             place="bottom"
             type="dark"
             effect="solid"
@@ -50,9 +49,6 @@ export default function Navbar() {
             effect="solid"
           />
         </li>
-        {/* <li>
-          <MyListBox />
-        </li> */}
         <li className="p-2" data-tip="Switch theme" data-for="theme">
           {isDarkMode ? (
             <FaSun

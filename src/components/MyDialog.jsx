@@ -1,4 +1,4 @@
-import { Fragment, useRef, useEffect, forwardRef, useState, useImperativeHandle } from "react";
+import { Fragment, useRef, forwardRef, useState, useImperativeHandle } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { FaTimes, FaSearch } from 'react-icons/fa'
 import { ChevronDownIcon } from "@heroicons/react/solid";

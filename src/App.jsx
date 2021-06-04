@@ -1,6 +1,6 @@
 import React from "react";
 import Portfolio from './pages/Portfolio.jsx'
-import MarketCap from './pages/MarketCap.jsx'
+import Coinlist from './pages/Coinlist.jsx'
 import Home from './pages/Home.jsx'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
@@ -19,8 +19,8 @@ function App() {
             <Route path="/portfolio">
               <Portfolio />
             </Route>
-            <Route path="/marketcap">
-              <MarketCap />
+            <Route path="/coinlist">
+              <Coinlist />
             </Route>
           </Switch>
           <Footer />

@@ -60,7 +60,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="mt-8">
-        <p>©️ 2021 Bleriot Noguia. All rights reserved</p>
+        <p>©️ 2021 - Code with love by <a href="https://bleriotnoguia.com/">Bleriot Noguia</a>. - Image from <a href="https://coinmarketcap.com/">CoinMarketcap</a></p>
       </div>
     </div>
   );
