@@ -4,6 +4,8 @@ import Loader from '../components/Loader'
 import Message from '../components/Message'
 import {useDispatch, useSelector} from 'react-redux'
 import {listCoins, getCoinStatus} from '../actions/coinActions'
+import {FaChevronRight, FaChevronLeft} from 'react-icons/fa'
+import ReactTooltip from "react-tooltip";
 
 export default function MarketCap() {
   const dispatch = useDispatch()
@@ -64,10 +66,12 @@ export default function MarketCap() {
                     })}
                   </tbody>
                 </table>
+                <ReactTooltip id="next" place="bottom" type="dark" effect="solid" />
+                <ReactTooltip id="previous" place="bottom" type="dark" effect="solid" />
                 <ReactPaginate
                   forcePage={currentPage}
-                  previousLabel={'previous'}
-                  nextLabel={'next'}
+                  previousLabel={<FaChevronLeft data-tip='Previous' data-for='previous' />}
+                  nextLabel={<FaChevronRight data-tip='Next' data-for='next'/>}
                   breakLabel={'...'}
                   breakClassName={'break-me'}
                   pageCount={totalCount/perPage}
@@ -76,9 +80,10 @@ export default function MarketCap() {
                   pageClassName={'px-2'}
                   disableInitialCallback={true}
                   onPageChange={handlePageClick}
-                  containerClassName={'pagination flex justify-end mt-5'}
+                  containerClassName={'pagination flex justify-end items-center mt-5'}
                   activeClassName={'active font-bold'}
-                /></>
+                />
+                </>
                )}
             </div>
       </div>
