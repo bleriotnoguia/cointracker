@@ -8,7 +8,7 @@
 
 In the project directory, you can run:
 
-### `json-server --watch .\src\data.json --port 3004`
+### `json-server --watch data.json --port 3004`
 
 Start JSON Server on port 3004.\
 For the demo we use 5000 coins with default data. To get the real data you must clone the projet and update url/api
