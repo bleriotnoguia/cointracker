@@ -5,6 +5,8 @@ import { ChevronDownIcon } from "@heroicons/react/solid";
 import {addCoin} from '../actions/holdingActions'
 import {useDispatch, useSelector} from 'react-redux'
 import { searchCoin } from "../actions/coinActions";
+import Loader from './Loader'
+import Message from './Message'
 
 const MyDialog = forwardRef((props, ref) => {
     const [open, setOpen] = useState(false);
@@ -14,7 +16,7 @@ const MyDialog = forwardRef((props, ref) => {
     const cancelButtonRef = useRef();
 
     const coinSearch = useSelector(state => state.coinSearch)
-    const {coins} = coinSearch
+    const {error, loading, coins} = coinSearch
 
     const dispatch = useDispatch()
     
@@ -147,14 +149,16 @@ const MyDialog = forwardRef((props, ref) => {
                             onFocus={handleOnFocus}
                         />
                         {activeSearch ? <div className="rounded-md bg-white shadow-md absolute mt-1 w-full overflow-y-auto overflow-x-hidden max-h-32">
-                          <ul className="px-3 py-2">
-                            {coins.map((coin, index) => <li className="flex items-center my-1 rounded-md cursor-pointer hover:bg-gray-200" key={index} onClick={() => handleSelectedCoin({...coin, qty: ''})}> <img
-                              className="mr-2 w-4 h-4 md:w-5 md:h-5"
-                              src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${coin.id}.png`}
-                              alt={coin.name}
-                              />{coin.name}</li>
-                            )}
-                          </ul>
+                          {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (<>
+                            <ul className="px-3 py-2">
+                              {coins.map((coin, index) => <li className="flex items-center my-1 rounded-md cursor-pointer hover:bg-gray-200" key={index} onClick={() => handleSelectedCoin({...coin, qty: ''})}> <img
+                                className="mr-2 w-4 h-4 md:w-5 md:h-5"
+                                src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${coin.id}.png`}
+                                alt={coin.name}
+                                />{coin.name}</li>
+                              )}
+                            </ul>
+                          </>)}
                         </div> : ''}
                       </div>}
                       
