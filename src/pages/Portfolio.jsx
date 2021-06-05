@@ -5,6 +5,8 @@ import { FaPencilAlt, FaTrashAlt } from "react-icons/fa";
 import {useDispatch, useSelector} from 'react-redux'
 import {listHolding, deleteCoin} from '../actions/holdingActions'
 import { updatePrivacy } from "../actions/settingActions";
+import Loader from '../components/Loader'
+import Message from '../components/Message'
 
 export default function Portfolio() {
   const dispatch = useDispatch()
@@ -46,6 +48,7 @@ export default function Portfolio() {
           </h1>
           <p className="text-xl text-center md:text-left">Track your investment performance</p>
         </div>
+        {loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : (<>
         <div className="container md:w-2/3 xl:w-1/2 flex flex-col md:flex-row justify-between items-center mx-auto px-4 py-4">
           <div
             className="flex-grow my-2"
@@ -141,7 +144,7 @@ export default function Portfolio() {
               })}
             </tbody>
           </table>
-        </div>
+        </div></>)}
       </div>
       <MyDialog
         ref={alertRef}

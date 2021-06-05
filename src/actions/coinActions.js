@@ -29,7 +29,7 @@ export const listCoins = (new_offset) => async (dispatch, getState) => {
     }
     const { coinList: {perPage} } = getState();
     const { data } = await axios.get(
-      `http://localhost:3004/coins?_start=${offset - perPage}&_end=${offset}`,
+      `${window.url_api}/coins?_start=${offset - perPage}&_end=${offset}`,
       config
     );
     dispatch({
@@ -59,7 +59,7 @@ export const getCoinStatus = () => async (dispatch) => {
           };
       
           const { data } = await axios.get(
-              'http://localhost:3004/status',
+            window.url_api+'/status',
               config
             );
           dispatch({
@@ -86,10 +86,10 @@ export const searchCoin = (text) => async (dispatch) => {
     var myResponse
 
     if(text){
-      const { data } = await axios.get('http://localhost:3004/coins?name_like='+text)
+      const { data } = await axios.get(window.url_api+'/coins?name_like='+text)
       myResponse = data
     }else{
-      const { data } = await axios.get('http://localhost:3004/coins?_start=0&_limit=4')
+      const { data } = await axios.get(window.url_api+'/coins?_start=0&_limit=4')
       myResponse = data
     }
 

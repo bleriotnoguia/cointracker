@@ -33,9 +33,9 @@ export const listHolding = () => async (dispatch, getState) => {
                   listId = listId + '&'
                 }
             }
-
+            
             const { data } = await axios.get(
-                'http://localhost:3004/coins?'+listId,
+              window.url_api+'/coins?'+listId,
                 config
               );
 
@@ -75,7 +75,7 @@ export const addCoin = (id, qty) => async (dispatch, getState) => {
       type: ADD_COIN_REQUEST
     })
 
-    const { data } = await axios.get('http://localhost:3004/coins/'+id)
+    const { data } = await axios.get(window.url_api+'/coins/'+id)
 
     dispatch({
       type: ADD_COIN_SUCCESS,
