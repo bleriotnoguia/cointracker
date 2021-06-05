@@ -56,7 +56,7 @@ export default function Portfolio() {
           >
             <div className={`w-52 md:w-40 lg:w-52 bg-white dark:bg-gray-700 rounded-md border border-gray-300 mx-auto md:mx-0 ${!isPrivateMode ? 'px-8 md:px-4 lg:px-8' : 'text-center'} py-3`}>
               {!isPrivateMode ? <>
-                  <p className="text-sm flex">
+                  <p className="text-sm flex" style={{minWidth: '10rem'}}>
                     Current Balance{" "}
                     <EyeClose className="inline h-5 ml-1 cursor-pointer" onClick={() => dispatch(updatePrivacy())} />
                   </p>
