@@ -14,6 +14,8 @@ By default the project fetch data from `https://cointracker-api.vercel.app` to u
 
 For the demo this project use 5000 coins with default data. To get the real data you must clone the projet and update url/api
 
+The repository for the api : [github.com/bleriotnoguia/cointracker-api](https://github.com/bleriotnoguia/cointracker-api)
+
 ### `yarn start`
 
 Runs the app in the development mode.\
