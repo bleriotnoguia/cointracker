@@ -22,7 +22,7 @@ if (
 }
 
 // change this to "http://localhost:3004" when using "json-data --watch data.json --port 3004" on localhost
-window.url_api = 'https://cryptocurrencies-data.herokuapp.com'
+window.url_api = 'https://cointracker-api.vercel.app'
 
 const perPage = 25
 const isDarkModeFromStorage = localStorage.isDarkMode ? JSON.parse(localStorage.isDarkMode) : false

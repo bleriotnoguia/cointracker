@@ -10,7 +10,7 @@ In the project directory, you can run:
 
 ### `json-server --watch data.json --port 3004`
 
-By default the project fetch data from `https://cryptocurrencies-data.herokuapp.com` to use data.json you must change the value of `window.url_api` in `./src/store.js` on line 25
+By default the project fetch data from `https://cointracker-api.vercel.app` to use data.json you must change the value of `window.url_api` in `./src/store.js` on line 25
 
 For the demo this project use 5000 coins with default data. To get the real data you must clone the projet and update url/api
 
